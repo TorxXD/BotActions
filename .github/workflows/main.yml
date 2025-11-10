@@ -1,0 +1,41 @@
+name: UDP Flood
+
+on:
+  workflow_dispatch:
+    inputs:
+      ip:
+        description: 'IP address to flood'
+        required: true
+        type: string
+      port:
+        description: 'Port to flood'
+        required: true
+        type: number
+      tiempo:
+        description: 'Duration in seconds'
+        required: true
+        type: number
+
+jobs:
+  flood:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install websockets asyncio
+
+      - name: Run UDP Flood Script
+        run: python udp_flood.py
+        env:
+          IP: ${{ github.event.inputs.ip }}  # Usa la IP del input
+          PORT: ${{ github.event.inputs.port }} # Usa el puerto del input
+          TIEMPO: ${{ github.event.inputs.tiempo }} # Usa el tiempo del input
