@@ -1,4 +1,4 @@
-name: UDP Flood
+name: UDP Floood
 
 on:
   workflow_dispatch:
